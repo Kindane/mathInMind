@@ -1,6 +1,5 @@
 MAIN_FILE = main.cpp
-OTHER_FILES =
-CC = gcc
+CC = g++
 BUILD_DIR = build
 OUTPUT_FILE = main
 
@@ -10,7 +9,7 @@ all: build run
 
 build:
 	@mkdir -p ${BUILD_DIR}
-	${CC} ${MAIN_FILE} ${OTHER_FILES} -o ${BUILD_DIR}/${OUTPUT_FILE} -lstdc++
+	${CC} ${MAIN_FILE} -o ${BUILD_DIR}/${OUTPUT_FILE}
 
 run: build
 	${BUILD_DIR}/${OUTPUT_FILE}
