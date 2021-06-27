@@ -26,22 +26,22 @@ int main() {
 	switch (level) {
 		case 1: /* easy level */
 			div1 = 10;
-			div2 = 90;
+			div2 = 99;
 			break;
 		case 2: /* Medium level*/
 			div1 = 100;
-			div2 = 900;
+			div2 = 999;
 			break;
 		case 3: /* Hard level */
 			div1 = 1000;
-			div2 = 9000;
+			div2 = 9999;
 	}
 
 	Timer t;
 	for (int i = 1; i <= 10; i++) {
-		num1 = rand()%div2+div1;
-		num2 = rand()%div2+div1;
-		char curr_operation = operations[rand()%2];
+		num1 = rand() % div2 + div1;
+		num2 = rand() % div2 + div1;
+		char curr_operation = operations[rand() % 2];
 		switch (curr_operation) {
 			case '+':
 				result = num1 + num2;
