@@ -2,6 +2,7 @@
 #include <ctime>
 #include <sys/stat.h>
 #include <string>
+#include <cstring>
 #include "timer.hpp"
 
 struct Score {
@@ -18,14 +19,43 @@ inline bool exists(const std::string& name) {
 }
 
 
-int main() {
+static void show_score(const char* filename){
+
+	Score score;
+	FILE* file = fopen(filename, "rb");
+	if (file == NULL) {
+		std::cout << "There is no " << filename << " in this folder\n";
+		return;
+	}
+
+	fread(&score, sizeof(Score), 1, file);
+	/*
+	if (score.total == 0 || score.average == 0) {
+		std::cout << "There is no " << filename << " in this folder";
+	}
+	*/
+	std::cout << "total: " << score.total << std::endl;
+	std::cout << "average: " << score.average << std::endl;
+	fclose(file);
+}
+
+
+int main(int argc, char** argv) {
 	using std::cout;
 	using std::endl;
 	using std::cin;
+	std::string score_filename = "score.data";
+
+	if (argc == 2) {
+		if (!strcmp(argv[1], "score")) {
+			show_score(score_filename.c_str());
+			return EXIT_SUCCESS;
+		}
+	}
+
 	srand(time(NULL));
 
 	static const char operations[] = {'+', '-'};
-	std::string score_filename = "score.data";
 	int level;
 	int num1, num2, result;
 	int limit;
