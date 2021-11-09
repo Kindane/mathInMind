@@ -1,20 +1,25 @@
-MAIN_FILE = main.cpp
-CC = g++
+CXX = g++
+CFLAGS = -W -Wall -Werror -ggdb3
 BUILD_DIR = build
-OUTPUT_FILE = main
+OBJ = main.o
 
-.PHONY: build
+main: ${BUILD_DIR}/${OBJ}
+	${CXX} ${CFLAGS} $< -o ${BUILD_DIR}/main
 
-all: build run
-
-build:
+${BUILD_DIR}/%.o: %.cpp
 	@mkdir -p ${BUILD_DIR}
-	${CC} ${MAIN_FILE} -o ${BUILD_DIR}/${OUTPUT_FILE}
-
-run: build
-	${BUILD_DIR}/${OUTPUT_FILE}
+	${CXX} ${CFLAGS} $< -c -o $@
 
 clean:
-	@echo Removing \"${BUILD_DIR}\" directory...
-	@rm -rf ${BUILD_DIR}
-	@echo Done.
+	rm -rf ${BUILD_DIR}
+
+run: main
+	./${BUILD_DIR}/main
+
+debug: main
+	valgrind --leak-check=full \
+			--show-leak-kinds=all \
+			--track-origins=yes \
+			--verbose \
+			--log-file=valgrind-out.txt \
+			./main
